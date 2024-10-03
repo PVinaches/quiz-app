@@ -20,7 +20,7 @@ export default function Quiz() {
   
   return (
     <div id="quiz">
-      <Question questionIndex={activeQuestionIndex} onSelectAnswer={handleSelectedAnswer}
+      <Question key={activeQuestionIndex} questionIndex={activeQuestionIndex} onSelectAnswer={handleSelectedAnswer}
        handleSkipAnswer={handleSkipAnswer} ></Question>
     </div>
   );

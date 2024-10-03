@@ -6,6 +6,15 @@ import questions from "../assets/questions";
 
 export default function Question({ questionIndex, onSelectAnswer, handleSkipAnswer }) {
   const [answer, setAnswer] = useState({ selectedAnswer: '', isCorrect: null });
+  let timer = 10000;
+
+  if (answer.selectedAnswer) {
+    timer = 1000;
+  }
+
+  if (answer.isCorrect != null) {
+    timer = 2000;
+  }
 
   const handleSelectAnswer = useCallback(function handleSelectAnswer(answer) {
     setAnswer({ selectedAnswer: answer, isCorrect: null });
@@ -29,7 +38,9 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
 
   return (
     <div id="question">
-      <QuestionTimer timeout={10000} onTimeOut={handleSkipAnswer} />
+      <QuestionTimer key={timer} timeout={timer}
+       onTimeOut={answer.selectedAnswer === '' ? handleSkipAnswer : null}
+       mode={answerState} />
       <h2>{questions[questionIndex].text}</h2>
       <Answers answers={questions[questionIndex].answers} selectedAnswer={answer.selectedAnswer} 
         answerState={answerState} handleSelectedAnswer={handleSelectAnswer} />
