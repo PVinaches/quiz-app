@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import QuestionTimer from "./QuestionTimer";
 import Answers from "./Answers";
 import questions from "../assets/questions";
@@ -16,7 +16,7 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
     timer = 2000;
   }
 
-  const handleSelectAnswer = useCallback(function handleSelectAnswer(answer) {
+  function handleSelectAnswer(answer) {
     setAnswer({ selectedAnswer: answer, isCorrect: null });
 
     setTimeout(() => {
@@ -27,7 +27,7 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
         onSelectAnswer(answer);
       }, 2000);
     }, 1000);
-  }, [questionIndex, onSelectAnswer]);
+  };
 
   let answerState = '';
   if (answer.selectedAnswer && answer.isCorrect !== null) {
@@ -39,7 +39,7 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
   return (
     <div id="question">
       <QuestionTimer key={timer} timeout={timer}
-       onTimeOut={answer.selectedAnswer === '' ? handleSkipAnswer : null}
+       onTimeout={handleSkipAnswer}
        mode={answerState} />
       <h2>{questions[questionIndex].text}</h2>
       <Answers answers={questions[questionIndex].answers} selectedAnswer={answer.selectedAnswer} 
