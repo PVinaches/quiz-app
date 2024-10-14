@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
-import questions from "../assets/questions";
+import { useContext } from "react";
+import { QuizesContext } from "../context/questions-context";
 import quizCompleteImg from '../assets/quiz-complete.png'
 
-export default function Summary({ userAnswers }) {
+export default function Summary({ userAnswers, quizNumber }) {
+  const currentQuiz = useContext(QuizesContext).quizes[quizNumber];
+
   let skipped = 0, correct = 0;
   userAnswers.map((answer, id) => {
     if (answer === null) {
       skipped++;
-    } else if (answer === questions[id].answers[0]) {
+    } else if (answer === currentQuiz.questions[id].answers[0]) {
       correct++;
     }
   });
@@ -39,7 +42,7 @@ export default function Summary({ userAnswers }) {
           let className = 'user-answer';
           if (answer === null) {
             className += ' skipped';
-          } else if (answer === questions[id].answers[0]) {
+          } else if (answer === currentQuiz.questions[id].answers[0]) {
             className += ' correct';
           } else {
             className += ' wrong';
@@ -48,7 +51,7 @@ export default function Summary({ userAnswers }) {
           return (
             <li key={id} >
               <h3>{id + 1}</h3>
-              <p className="question">{questions[id].text}</p>
+              <p className="question">{currentQuiz.questions[id].text}</p>
               <p className={className} >{answer ?? 'Skipped'}</p>
             </li>
           );
@@ -59,5 +62,6 @@ export default function Summary({ userAnswers }) {
 };
 
 Summary.propTypes = {
-  userAnswers: PropTypes.array.isRequired
+  userAnswers: PropTypes.array.isRequired,
+  quizNumber: PropTypes.number.isRequired
 }

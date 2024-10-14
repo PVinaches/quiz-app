@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import QuestionTimer from "./QuestionTimer";
 import Answers from "./Answers";
-import questions from "../assets/questions";
+import { QuizesContext } from "../context/questions-context";
 
-export default function Question({ questionIndex, onSelectAnswer, handleSkipAnswer }) {
+export default function Question({ questionIndex, quizNumber, onSelectAnswer, handleSkipAnswer }) {
+  const currentQuiz = useContext(QuizesContext).quizes[quizNumber];
   const [answer, setAnswer] = useState({ selectedAnswer: '', isCorrect: null });
   let timer = 10000;
 
@@ -20,7 +21,7 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
     setAnswer({ selectedAnswer: answer, isCorrect: null });
 
     setTimeout(() => {
-      const isCorrect = answer === questions[questionIndex].answers[0] ? 'correct' : 'wrong';
+      const isCorrect = answer === currentQuiz.questions[questionIndex].answers[0] ? 'correct' : 'wrong';
       setAnswer({ selectedAnswer: answer, isCorrect: isCorrect });
 
       setTimeout(() => {
@@ -41,8 +42,8 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
       <QuestionTimer key={timer} timeout={timer}
        onTimeout={handleSkipAnswer}
        mode={answerState} />
-      <h2>{questions[questionIndex].text}</h2>
-      <Answers answers={questions[questionIndex].answers} selectedAnswer={answer.selectedAnswer} 
+      <h2>{currentQuiz.questions[questionIndex].text}</h2>
+      <Answers answers={currentQuiz.questions[questionIndex].answers} selectedAnswer={answer.selectedAnswer} 
         answerState={answerState} handleSelectedAnswer={handleSelectAnswer} />
     </div>
   );
@@ -50,6 +51,7 @@ export default function Question({ questionIndex, onSelectAnswer, handleSkipAnsw
 
 Question.propTypes = {
   questionIndex: PropTypes.number.isRequired,
+  quizNumber: PropTypes.number.isRequired,
   onSelectAnswer: PropTypes.func.isRequired,
   handleSkipAnswer: PropTypes.func.isRequired
 };
