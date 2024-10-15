@@ -8,7 +8,7 @@ function App() {
       <Header></Header>
       
       <main>
-        <Quiz></Quiz>
+        <Quiz quizNumber={0} ></Quiz>
       </main>
     </>
   )

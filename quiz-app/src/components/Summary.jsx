@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { QuizesContext } from "../context/questions-context";
 import quizCompleteImg from '../assets/quiz-complete.png'
 
-export default function Summary({ userAnswers, quizNumber }) {
-  const currentQuiz = useContext(QuizesContext).quizes[quizNumber];
-
+export default function Summary({ userAnswers, currentQuiz }) {
   let skipped = 0, correct = 0;
   userAnswers.map((answer, id) => {
     if (answer === null) {
@@ -63,5 +59,5 @@ export default function Summary({ userAnswers, quizNumber }) {
 
 Summary.propTypes = {
   userAnswers: PropTypes.array.isRequired,
-  quizNumber: PropTypes.number.isRequired
+  currentQuiz: PropTypes.object.isRequired
 }

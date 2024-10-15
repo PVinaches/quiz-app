@@ -6,7 +6,7 @@ import './index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <QuizesProvider>
+    <QuizesProvider storeName="quizes" version={1} >
       <App />
     </QuizesProvider>
   </StrictMode>,

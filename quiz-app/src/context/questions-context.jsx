@@ -1,23 +1,20 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
-import questions from "../assets/questions";
+import { createContext, useContext } from "react";
+import { useIndexedDB } from "../hooks/useIndexedDB";
 
-export const QuizesContext = createContext({
-  quizes: []
-});
+// Create the Context
+const QuizesContext = createContext();
 
-export default function QuizesProvider({ children }) {
-  const [quizList, setQuizes] = useState([
-    {
-      id: 0,
-      questions: questions
-    }
-  ]);
+// Custom hook to use the IndexedDB Context
+export const useQuizesContext = () => {
+  return useContext(QuizesContext);
+};
 
-  if (quizList.length === 0) setQuizes(null);
+export default function QuizesProvider({ children, storeName, version }) {
+  const indexedDB = useIndexedDB(storeName, version);
 
   return (
-    <QuizesContext.Provider value={{ quizes: quizList }}>
+    <QuizesContext.Provider value={indexedDB} >
       {children}
     </QuizesContext.Provider>
   );

@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import QuestionTimer from "./QuestionTimer";
 import Answers from "./Answers";
-import { QuizesContext } from "../context/questions-context";
 
-export default function Question({ questionIndex, quizNumber, onSelectAnswer, handleSkipAnswer }) {
-  const currentQuiz = useContext(QuizesContext).quizes[quizNumber];
+export default function Question({ questionIndex, currentQuiz, onSelectAnswer, handleSkipAnswer }) {
   const [answer, setAnswer] = useState({ selectedAnswer: '', isCorrect: null });
   let timer = 10000;
 
@@ -51,7 +49,7 @@ export default function Question({ questionIndex, quizNumber, onSelectAnswer, ha
 
 Question.propTypes = {
   questionIndex: PropTypes.number.isRequired,
-  quizNumber: PropTypes.number.isRequired,
+  currentQuiz: PropTypes.object.isRequired,
   onSelectAnswer: PropTypes.func.isRequired,
   handleSkipAnswer: PropTypes.func.isRequired
 };
