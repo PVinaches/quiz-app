@@ -1,12 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Homepage from "./pages/home";
-import CreateQuiz from "./pages/createQuiz";
-import SelectQuiz from "./pages/selectQuiz";
+import Homepage from "./pages/Home";
+import CreateQuiz from "./pages/CreateQuiz";
+import SelectQuiz from "./pages/SelectQuiz";
+import RootLayout from "./pages/Root";
 
 const router = createBrowserRouter([
-  { path: '',  element: <Homepage />},
-  { path: '/createQuiz', element: <CreateQuiz />},
-  { path: '/selectQuiz', element: <SelectQuiz />}
+  { path: '/',  element: <RootLayout />, children: [
+    { path: '/', element: <Homepage />},
+    { path: '/createQuiz', element: <CreateQuiz />},
+    { path: '/selectQuiz', element: <SelectQuiz />}
+  ]},
 ]);
 
 function App() {
