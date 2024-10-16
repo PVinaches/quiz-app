@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import './header.css';
 import quizLogo from '../assets/quiz-logo.png';
 
 export default function Header() {
