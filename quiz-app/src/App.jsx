@@ -1,17 +1,16 @@
-import Header from "./components/Header";
-import Quiz from "./components/Quiz";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Homepage from "./pages/home";
+import CreateQuiz from "./pages/createQuiz";
+import SelectQuiz from "./pages/selectQuiz";
+
+const router = createBrowserRouter([
+  { path: '',  element: <Homepage />},
+  { path: '/createQuiz', element: <CreateQuiz />},
+  { path: '/selectQuiz', element: <SelectQuiz />}
+]);
 
 function App() {
-
-  return (
-    <>
-      <Header></Header>
-      
-      <main>
-        <Quiz quizNumber={0} ></Quiz>
-      </main>
-    </>
-  )
+  return <RouterProvider router={router} />;
 }
 
 export default App;
